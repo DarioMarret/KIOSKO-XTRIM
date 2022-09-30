@@ -1,4 +1,4 @@
-import { buscarCuentas, buscarEstatusCuenta, LinkPago } from '../controller/controller'
+import { buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago } from '../controller/controller'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
 const routes = [
@@ -46,6 +46,20 @@ const routes = [
             },
         },
         handler: LinkPago
+    },
+    {
+        path: '/api/v1/buscarCuentaSaldo',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    cedula: { type: 'string' },
+                },
+                required: ['cedula']
+            },
+        },
+        handler: buscarCuentaSaldo
     },
 ]
 

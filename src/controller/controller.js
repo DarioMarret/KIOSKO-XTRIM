@@ -99,3 +99,30 @@ export const LinkPago = async (req, reply) => {
         console.log(error)
     }
 }
+
+export const buscarCuentaSaldo = async (req, reply) => {
+    const {  cedula } = req.body
+    try {
+        const { data, status } = await axios.post('https://whatsapp.grupotvcable.com:9007/api/tvcable/buscarCuentaSaldo', {
+            Identificacion: cedula
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.TOKEN}`
+            },
+        })
+        if (status === 200) {
+            reply.code(200).send({
+                success: true,
+                dara: data.Objeto
+            })
+        } else {
+            reply.code(401).send({
+                success: false,
+                msg: 'Error al consultar el estatus de la cuenta'
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}

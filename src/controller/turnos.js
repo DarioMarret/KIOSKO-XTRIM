@@ -52,9 +52,9 @@ export const createTurno = async (req, reply) => {
             fecha_turno,
             tipo_turno
         }).then((res) => {
-            return res
+            errorHandler(req, reply, res)
         }).catch((err) => {
-            return err
+            errorHandler(req, reply, err)
         })
     } catch (err) {
         await errorHandler(req, reply, err)

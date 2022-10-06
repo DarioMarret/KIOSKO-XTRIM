@@ -28,6 +28,7 @@
     "mysql2": "^2.3.3",
     "nano-date": "^4.1.0",
     "node-cron": "^3.0.2",
+    "node-fetch": "^3.2.10",
     "nodejs-base64": "^2.0.0"
   },
   "devDependencies": {

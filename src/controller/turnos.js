@@ -1,6 +1,7 @@
 import isEmpty from "just-is-empty"
 import moment from "moment/moment"
 import axios from "axios"
+import fetch from "node-fetch"
 
 export const listarTurnos = async (req, reply) => {
     const { id_agent, fecha } = req.body

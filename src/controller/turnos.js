@@ -34,8 +34,23 @@ export const listarTurnos = async (req, reply) => {
 export const createTurno = async (req, reply) => {
 
     const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
-    try {
-        const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+    // const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+    //     user_id,
+    //     agencia_id,
+    //     horario,
+    //     cedula,
+    //     nombres,
+    //     referencias,
+    //     correo,
+    //     fecha_turno,
+    //     tipo_turno
+    // })
+    const { data, status } = await fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
             user_id,
             agencia_id,
             horario,
@@ -46,31 +61,23 @@ export const createTurno = async (req, reply) => {
             fecha_turno,
             tipo_turno
         })
-        if (status == 200) {
-            reply.code(200).send({
-                success: true,
-                dara: data
-            })
+    })
+    if (status == 200) {
 
-        } else if (status == 400) {
-            reply.send({
-                success: false,
-                msg: data
-            })
-        } else if (status == 404) {
-            reply.send({
-                success: false,
-                msg: data
-            })
-        }
+        reply.code(200).send({
+            success: true,
+            dara: data
+        })
 
-    } catch (error) {
-        return {
+    } else {
+
+        reply.code(200).send({
             success: false,
-            msg: 'Error al crear el turno',
-            data : error
-        }
+            msg: data
+        })
+
     }
+
 }
 
 export const ConsultarTurno = async (req, reply) => {

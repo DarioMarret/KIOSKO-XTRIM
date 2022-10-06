@@ -55,7 +55,7 @@ export const createTurno = async (req, reply) => {
         console.log(error)
         reply.code(200).send({
             success: false,
-            msg: 'Error al crear el turno'
+            msg: data.mensaje
         })
     }
 }

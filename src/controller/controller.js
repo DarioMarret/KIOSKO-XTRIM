@@ -1,4 +1,5 @@
 import axios from "axios"
+import isEmpty from "just-is-empty"
 import moment from "moment"
 moment.locale("es")
 
@@ -136,13 +137,13 @@ export const planUpgrade = async (req, reply) => {
                 'Authorization': `${process.env.TOKEN_PLAN}`
             },
         })
-        if (data.Objeto) {
+        if (!isEmpty(data.Objeto)) {
             reply.code(200).send({
                 success: true,
                 dara: data.Objeto
             })
         } else {
-            reply.code(401).send({
+            reply.code(200).send({
                 success: false,
                 msg: 'Error al consultar el estatus de la cuenta'
             })

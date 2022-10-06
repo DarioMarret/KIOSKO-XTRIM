@@ -66,11 +66,6 @@ export const createTurno = async (req, reply) => {
                 success: false,
                 data: err.request
             })
-        } else {
-            reply.code(200).send({
-                success: false,
-                data: err.response.data
-            })
         }
     }
 

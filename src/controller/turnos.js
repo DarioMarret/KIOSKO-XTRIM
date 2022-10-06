@@ -33,28 +33,46 @@ export const listarTurnos = async (req, reply) => {
 
 export const createTurno = async (req, reply) => {
 
-    const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
-    axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
-        user_id,
-        agencia_id,
-        horario,
-        cedula,
-        nombres,
-        referencias,
-        correo,
-        fecha_turno,
-        tipo_turno
-    }).then((response) => {
-        reply.code(200).send({
-            success: true,
-            dara: response.data
+    var info = ""
+    try {
+        const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
+        const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+            user_id,
+            agencia_id,
+            horario,
+            cedula,
+            nombres,
+            referencias,
+            correo,
+            fecha_turno,
+            tipo_turno
         })
-    }).catch((error) => {
-        reply.code(200).send({
-            success: false,
-            msg: error
-        })
-    })
+        if (status == 200) {
+
+            reply.code(200).send({
+                success: true,
+                data: data
+            })
+
+        }
+    } catch (err) {
+        if (err.response) {
+            reply.code(200).send({
+                success: false,
+                data: err.response
+            })
+        } else if (err.request) {
+            reply.code(200).send({
+                success: false,
+                data: err.request
+            })
+        } else {
+            reply.code(200).send({
+                success: false,
+                data: err.response.data
+            })
+        }
+    }
 
 }
 

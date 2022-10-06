@@ -34,21 +34,30 @@ export const listarTurnos = async (req, reply) => {
 export const createTurno = async (req, reply) => {
 
     const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
-    const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
-        user_id,
-        agencia_id,
-        horario,
-        cedula,
-        nombres,
-        referencias,
-        correo,
-        fecha_turno,
-        tipo_turno
-    })
-    reply.code(200).send({
-        success: true,
-        dara: data
-    })
+    try {
+        const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+            user_id,
+            agencia_id,
+            horario,
+            cedula,
+            nombres,
+            referencias,
+            correo,
+            fecha_turno,
+            tipo_turno
+        })
+        reply.code(200).send({
+            success: true,
+            dara: data
+        })
+
+    } catch (error) {
+        console.log(error)
+        reply.code(200).send({
+            success: false,
+            msg: error.message
+        })
+    }
 }
 
 export const ConsultarTurno = async (req, reply) => {
@@ -66,7 +75,7 @@ export const ConsultarTurno = async (req, reply) => {
 
             reply.code(200).send({
                 success: false,
-                msg: data.mensaje
+                msg: data
             })
 
         }

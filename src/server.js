@@ -17,10 +17,10 @@ fastify.register(Fastifycors, {})
 
 fastify.register(async fastify => {
 
-    fastify.setErrorHandler(async err => {
-        console.log(err.message)
-        throw new Error(err.message)
-    })
+    // fastify.setErrorHandler(async err => {
+    //     console.log(err.message)
+    //     throw new Error(err.message)
+    // })
 
     Producer.forEach(route => {
         fastify.route(route)

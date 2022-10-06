@@ -33,15 +33,25 @@ export const listarTurnos = async (req, reply) => {
 
 export const createTurno = async (req, reply) => {
 
-    try {
-        const AxiosnInt = axios.create({
-            baseURL: 'https://turnostvc.intelnexo.com/api/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
-        AxiosnInt.post(`CreateTurnoCliente`, {
+    const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
+    // const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+    //     user_id,
+    //     agencia_id,
+    //     horario,
+    //     cedula,
+    //     nombres,
+    //     referencias,
+    //     correo,
+    //     fecha_turno,
+    //     tipo_turno
+    // })
+
+    const response = await fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
             user_id,
             agencia_id,
             horario,
@@ -51,30 +61,18 @@ export const createTurno = async (req, reply) => {
             correo,
             fecha_turno,
             tipo_turno
-        }).then((res) => {
-            if (res.status == 200) {
-                reply.code(200).send({
-                    success: true,
-                    dara: res.data
-                })
-            } else {
-                reply.code(200).send({
-                    success: false,
-                    msg: res
-                })
-            }
-        }).catch((err) => {
-            return err
         })
-    } catch (err) {
-        await errorHandler(req, reply, err)
+    })
+    const data = await response.json()
+    console.log(data)
+    if (data) {
+        reply.code(200).send({
+            success: true,
+            dara: data
+        })
     }
-
 }
 
-const errorHandler = async (req, reply, err) => {
-    reply.send({ error: err })
-}
 
 
 export const ConsultarTurno = async (req, reply) => {

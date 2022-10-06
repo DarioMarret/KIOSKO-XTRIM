@@ -136,7 +136,7 @@ export const planUpgrade = async (req, reply) => {
                 'Authorization': `${process.env.TOKEN_PLAN}`
             },
         })
-        if (data.Objeto != null || Object.keys(data.Objeto).length > 0) {
+        if (data.Objeto) {
             reply.code(200).send({
                 success: true,
                 dara: data.Objeto

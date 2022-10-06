@@ -62,6 +62,7 @@ export const createTurno = async (req, reply) => {
             tipo_turno
         })
     })
+    console.log(data)
     if (status == 200) {
 
         reply.code(200).send({

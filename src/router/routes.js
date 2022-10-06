@@ -63,7 +63,7 @@ const routes = [
         handler: buscarCuentaSaldo
     },
     {
-        path: '/api/v1/planUpgrade',
+        path: '/api/v1/planUpgrade/:NumeroContrato',
         method: 'GET',
         schema: {
             params: {

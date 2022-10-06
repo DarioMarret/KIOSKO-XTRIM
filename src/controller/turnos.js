@@ -55,11 +55,7 @@ export const createTurno = async (req, reply) => {
 
         }
     } catch (err) {
-        if (err.response) {
-            return err.response
-        } else if (err.request) {
-            return err.request
-        }
+        return err
     }
 
 }

@@ -45,7 +45,7 @@ export const createTurno = async (req, reply) => {
     //     fecha_turno,
     //     tipo_turno
     // })
-    const { data, status } = await fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+    fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -61,25 +61,24 @@ export const createTurno = async (req, reply) => {
             fecha_turno,
             tipo_turno
         })
-    })
-    console.log(data)
-    if (status == 200) {
-
-        reply.code(200).send({
-            success: true,
-            dara: data
+    }).then(res => res.json())
+        .then(json => {
+            console.log(json)
+            reply.code(200).send({
+                success: true,
+                dara: json
+            })
         })
-
-    } else {
-
-        reply.code(200).send({
-            success: false,
-            msg: data
+        .catch(err => {
+            console.log(err)
+            reply.code(200).send({
+                success: false,
+                msg: err
+            })
         })
-
-    }
-
 }
+
+
 
 export const ConsultarTurno = async (req, reply) => {
     const { cedula } = req.params

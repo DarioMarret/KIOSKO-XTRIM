@@ -46,14 +46,10 @@ export const createTurno = async (req, reply) => {
             fecha_turno,
             tipo_turno
         })
-        if (status == 200) {
-
-            reply.code(200).send({
-                success: true,
-                data: data
-            })
-
-        }
+        reply.send({
+            success: true,
+            data: data
+        })
     } catch (err) {
         return err
     }

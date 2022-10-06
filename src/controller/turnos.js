@@ -41,7 +41,7 @@ export const createTurno = async (req, reply) => {
             },
         })
         const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
-        const { data, status } = await AxiosnInt.post(`CreateTurnoCliente`, {
+        AxiosnInt.post(`CreateTurnoCliente`, {
             user_id,
             agencia_id,
             horario,
@@ -51,10 +51,10 @@ export const createTurno = async (req, reply) => {
             correo,
             fecha_turno,
             tipo_turno
-        })
-        reply.send({
-            success: true,
-            data: data
+        }).then((res) => {
+            return res
+        }).catch((err) => {
+            return err
         })
     } catch (err) {
         await errorHandler(req, reply, err)

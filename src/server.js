@@ -2,6 +2,7 @@ import 'dotenv/config'
 import Fastify from 'fastify'
 import swagger from "./utils/swagger"
 import Producer from './router/routes'
+import Turnos from './router/routes.turnos'
 import Fastifycors from "@fastify/cors"
 
 const fastify = Fastify({
@@ -23,7 +24,11 @@ fastify.register(async fastify => {
 
     Producer.forEach(route => {
         fastify.route(route)
-    });
+    })
+
+    Turnos.forEach(route => {
+        fastify.route(route)
+    })
 
 })
 

@@ -16,13 +16,13 @@ export const buscarEstatusCuenta = async (req, reply) => {
                 'Authorization': `Bearer ${process.env.TOKEN}`
             },
         })
-        if (status === 200) {
+        if (data.Objeto != null) {
             reply.code(200).send({
                 success: true,
                 dara: data.Objeto
             })
         } else {
-            reply.code(401).send({
+            reply.code(200).send({
                 success: false,
                 msg: 'Error al consultar el estatus de la cuenta'
             })
@@ -43,13 +43,13 @@ export const buscarCuentas = async (req, reply) => {
                 'Authorization': `Bearer ${process.env.TOKEN}`
             },
         })
-        if (status === 200) {
+        if (data.Objeto != null) {
             reply.code(200).send({
                 success: true,
                 dara: data.Objeto
             })
         } else {
-            reply.code(401).send({
+            reply.code(200).send({
                 success: false,
                 msg: 'Error al consultar el estatus de la cuenta'
             })
@@ -61,10 +61,10 @@ export const buscarCuentas = async (req, reply) => {
 
 
 export const LinkPago = async (req, reply) => {
-    const { cuenta, cedula, contrato, email } = req.body
+    const { cuenta, cedula, contrato, email, tipo } = req.body
     try {
         const { data, status } = await axios.post('https://whatsapp.grupotvcable.com:9007/api/tvcable/LinkPago', {
-            tipo: "Mensualidad",
+            tipo: tipo,
             cuenta: cuenta,
             cedula: cedula,
             contrato: contrato,
@@ -101,7 +101,7 @@ export const LinkPago = async (req, reply) => {
 }
 
 export const buscarCuentaSaldo = async (req, reply) => {
-    const {  cedula } = req.body
+    const { cedula } = req.body
     try {
         const { data, status } = await axios.post('https://whatsapp.grupotvcable.com:9007/api/tvcable/buscarCuentaSaldo', {
             Identificacion: cedula
@@ -111,7 +111,7 @@ export const buscarCuentaSaldo = async (req, reply) => {
                 'Authorization': `Bearer ${process.env.TOKEN}`
             },
         })
-        if (status === 200) {
+        if (data.Objeto != null || Object.keys(data.Objeto).length > 0) {
             reply.code(200).send({
                 success: true,
                 dara: data.Objeto
@@ -120,6 +120,79 @@ export const buscarCuentaSaldo = async (req, reply) => {
             reply.code(401).send({
                 success: false,
                 msg: 'Error al consultar el estatus de la cuenta'
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const planUpgrade = async (req, reply) => {
+    const { NumeroContrato } = req.params
+    try {
+        const { data, status } = await axios.get(`https://whatsapp.grupotvcable.com:1299/api/whatsappstore/ConsultaNuevoPlanIdPromo?contrato=${NumeroContrato}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${process.env.TOKEN_PLAN}`
+            },
+        })
+        if (data.Objeto != null || Object.keys(data.Objeto).length > 0) {
+            reply.code(200).send({
+                success: true,
+                dara: data.Objeto
+            })
+        } else {
+            reply.code(401).send({
+                success: false,
+                msg: 'Error al consultar el estatus de la cuenta'
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const ProblemadeServicio = async (req, reply) => {
+    const { Mac } = req.body
+    console.log(Mac)
+    try {
+        const { data, status } = await axios.get(`http://200.63.212.5:8080/api/terminals/${Mac}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${process.env.TOKEN_PLAN}`
+            },
+        })
+        if (status == 200) {
+            reply.code(200).send({
+                success: true,
+                dara: data
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const BuroCliente = async (req, reply) => {
+    const { cedula } = req.body
+    try {
+        const { data, status } = await axios.post(`https://whatsapp.grupotvcable.com:12001/api/whatsappstore/BuroCliente`,{
+            cedula: cedula
+        } ,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${process.env.TOKEN_PLAN}`
+            },
+        })
+        if (status == 200) {
+            reply.code(200).send({
+                success: true,
+                dara: data
+            })
+        }else{
+            reply.code(200).send({
+                success: false,
+                dara: data
             })
         }
     } catch (error) {

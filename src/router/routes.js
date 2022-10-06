@@ -1,4 +1,4 @@
-import { buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago } from '../controller/controller'
+import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago, planUpgrade, ProblemadeServicio } from '../controller/controller'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
 const routes = [
@@ -37,12 +37,13 @@ const routes = [
             body: {
                 type: 'object',
                 properties: {
+                    tipo: { type: 'string' },
                     cedula: { type: 'string' },
                     cuenta: { type: 'string' },
                     contrato: { type: 'string' },
                     email: { type: 'string' },
                 },
-                required: ['cedula', 'cuenta', 'contrato', 'email']
+                required: ['cedula', 'cuenta', 'contrato', 'email', 'tipo']
             },
         },
         handler: LinkPago
@@ -61,6 +62,47 @@ const routes = [
         },
         handler: buscarCuentaSaldo
     },
+    {
+        path: '/api/v1/planUpgrade',
+        method: 'GET',
+        schema: {
+            params: {
+                type: 'object',
+                properties: {
+                    NumeroContrato: { type: 'string' },
+                }
+            }
+        },
+        handler: planUpgrade
+    },
+    {
+        path: '/api/v1/ProblemaServicios',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    Mac: { type: 'string' },
+                },
+                required: ['Mac']
+            },
+        },
+        handler: ProblemadeServicio
+    },
+    {
+        path: '/api/v1/BuroCliente',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    cedula: { type: 'string' },
+                },
+                required: ['cedula']
+            },
+        },
+        handler: BuroCliente
+    }
 ]
 
 export default routes

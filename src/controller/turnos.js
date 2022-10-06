@@ -52,9 +52,19 @@ export const createTurno = async (req, reply) => {
             fecha_turno,
             tipo_turno
         }).then((res) => {
-            errorHandler(req, reply, res)
+            if (res.status == 200) {
+                reply.code(200).send({
+                    success: true,
+                    dara: res.data
+                })
+            } else {
+                reply.code(200).send({
+                    success: false,
+                    msg: res
+                })
+            }
         }).catch((err) => {
-            errorHandler(req, reply, err)
+            return err
         })
     } catch (err) {
         await errorHandler(req, reply, err)

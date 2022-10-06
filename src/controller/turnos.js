@@ -53,9 +53,9 @@ export const createTurno = async (req, reply) => {
             })
 
         }else if(status == 400){
-            reply.code(200).send({
+            reply.send({
                 success: false,
-                msg: data.mensaje
+                msg: data
             })
         }
 

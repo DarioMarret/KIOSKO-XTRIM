@@ -77,50 +77,49 @@ export const createTurno = async (req, reply) => {
 
 export const ConsultarTurno = async (req, reply) => {
     const { cedula } = req.params
-    try {
-        const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetTurnoCliente/${cedula}`)
-        if (status == 200) {
+    // const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetTurnoCliente/${cedula}`)
 
-            reply.code(200).send({
-                success: true,
-                dara: data
-            })
-
-        } else {
-
-            reply.code(200).send({
-                success: false,
-                msg: data
-            })
-
-        }
-    } catch (error) {
-        console.log(error)
+    const response = await fetch(`https://turnostvc.intelnexo.com/api/GetTurnoCliente/${cedula}`)
+    const data = await response.json()
+    if (data) {
+        reply.code(200).send({
+            success: true,
+            dara: data
+        })
+    } else {
+        reply.code(200).send({
+            success: false,
+            msg: 'Error al consultar de turnos'
+        })
     }
 }
 
 export const CancelarTurno = async (req, reply) => {
     const { user_id, cedula, ticket_id } = req.body
-    try {
-        const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CancelarTurnoCliente`, {
+    // const { data, status } = await axios.post(`https://turnostvc.intelnexo.com/api/CancelarTurnoCliente`, {
+    //     user_id, cedula, ticket_id
+    // })
+
+    const response = await fetch(`https://turnostvc.intelnexo.com/api/CancelarTurnoCliente`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
             user_id, cedula, ticket_id
         })
-        if (status == 200) {
-
-            reply.code(200).send({
-                success: true,
-                dara: data
-            })
-
-        } else {
-
-            reply.code(200).send({
-                success: false,
-                msg: 'Error al cancelar el turno'
-            })
-
-        }
-    } catch (error) {
-        console.log(error)
+    })
+    const data = await response.json()
+    if (data) {
+        reply.code(200).send({
+            success: true,
+            dara: data
+        })
+    } else {
+        reply.code(200).send({
+            success: false,
+            msg: 'Error al consultar de turnos'
+        })
     }
 }
+

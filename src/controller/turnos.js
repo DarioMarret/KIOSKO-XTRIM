@@ -75,7 +75,7 @@ export const ConsultarTurno = async (req, reply) => {
 
             reply.code(200).send({
                 success: false,
-                msg: 'Error al consultar el turno'
+                msg: data.mensaje
             })
 
         }

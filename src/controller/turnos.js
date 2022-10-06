@@ -57,6 +57,11 @@ export const createTurno = async (req, reply) => {
             success: false,
             msg: data
         })
+    } else if (status == 404) {
+        reply.send({
+            success: false,
+            msg: data
+        })
     }
 
     // } catch (error) {

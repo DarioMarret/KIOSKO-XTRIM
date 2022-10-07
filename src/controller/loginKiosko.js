@@ -29,7 +29,7 @@ export const VerificarToken = async (req, reply) => {
     if (tokenVerificado) {
         reply.code(200).send({
             success: true,
-            data: tokenVerificado
+            data: await ConsultarAgencia()
         })
     } else {
         reply.code(200).send({
@@ -119,5 +119,17 @@ export const ConsultarAgencias = async (req, reply) => {
             success: false,
             msg: 'Error al consultar'
         })
+    }
+}
+
+export const ConsultarAgencia = async () => {
+    try {
+        const response = await Agencias.find()
+        return response
+    } catch (error) {
+        return {
+            success: false,
+            msg: 'Error al consultar'
+        }
     }
 }

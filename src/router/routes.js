@@ -1,5 +1,5 @@
 import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago, planUpgrade, ProblemadeServicio } from '../controller/controller'
-import { ActualizarAgencia, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia } from '../controller/loginKiosko'
+import { ActualizarAgencia, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia, VerificarToken } from '../controller/loginKiosko'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
 const routes = [
@@ -175,6 +175,20 @@ const routes = [
             },
         },
         handler: GenerarTokenVerificacion
+    },
+    {
+        path: '/api/v1/verificarToken',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    token: { type: 'string' },
+                },
+                required: ['token']
+            },
+        },
+        handler: VerificarToken
     }
 ]
 

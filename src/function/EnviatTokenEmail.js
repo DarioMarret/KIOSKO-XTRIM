@@ -8,7 +8,7 @@ export const EnviarTokenEmail = async (email, token) => {
         const { data, status } = await axios.post('https://automation.xfiv.chat/sender_email/email/notificaciones', {
             email,
             asunto: "Token de verificación Kiosko",
-            content: `"<h1>Bienvenido a Kiosko Xtrim</h1>
+            content: `<h1>Bienvenido a Kiosko Xtrim</h1>
             <p>Este es tu token de verificación: ${token}</p>
             <p>Este es tu token expira en 5 minutos</p>`
         }, {

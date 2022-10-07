@@ -5,6 +5,7 @@ import Producer from './router/routes'
 import Turnos from './router/routes.turnos'
 import Fastifycors from "@fastify/cors"
 import './database/mongose'
+import './function/cron'
 
 const fastify = Fastify({
     logger: {
@@ -38,7 +39,6 @@ fastify.setErrorHandler(async err => {
     console.log(err.message)
     throw new Error(err.message)
 })
-
 
 
 

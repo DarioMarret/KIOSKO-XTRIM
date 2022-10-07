@@ -1,3 +1,4 @@
+import { Token } from "../model/token";
 
 export function generateP() {
     var pass = '';
@@ -7,4 +8,9 @@ export function generateP() {
         pass += str.charAt(char)
     }
     return pass;
+}
+
+export const EliminarToken = async (token) => {
+    const tokenEliminado = await Token.findOneAndDelete({ token })
+    console.log(tokenEliminado)
 }

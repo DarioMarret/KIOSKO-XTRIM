@@ -2,6 +2,7 @@ import { Agencias } from "../model"
 import { Token } from "../model/token";
 import { EnviarTokenEmail } from "../function/EnviatTokenEmail";
 import { generateP } from "../function/function";
+import moment from "moment";
 
 
 export const GenerarTokenVerificacion = async (req, reply) => {
@@ -9,7 +10,10 @@ export const GenerarTokenVerificacion = async (req, reply) => {
     const token = generateP()
     const newToken = new Token({
         email,
-        token
+        token,
+        fechaCreacion: moment().format('YYYY-MM-DD HH:mm:ss'),
+        estado: true,
+        agencia: ''
     })
     await newToken.save()
     await EnviarTokenEmail(email, token)
@@ -37,7 +41,6 @@ export const VerificarToken = async (req, reply) => {
 
 export const RegistrosAgencia = async (req, reply) => {
     const { id_agencia, nombre, ciudad, nemo, tipo, horario, caja } = req.body
-
     try {
         const newAgencia = new Agencias({
             id_agencia,

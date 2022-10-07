@@ -4,6 +4,7 @@ import swagger from "./utils/swagger"
 import Producer from './router/routes'
 import Turnos from './router/routes.turnos'
 import Fastifycors from "@fastify/cors"
+import './database/mongose'
 
 const fastify = Fastify({
     logger: {

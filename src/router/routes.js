@@ -1,4 +1,5 @@
 import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago, planUpgrade, ProblemadeServicio } from '../controller/controller'
+import { ActualizarAgencia, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia } from '../controller/loginKiosko'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
 const routes = [
@@ -102,6 +103,78 @@ const routes = [
             },
         },
         handler: BuroCliente
+    },
+    {
+        path: '/api/v1/Registrar_Agencias',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    nombre: { type: 'string' },
+                    ciudad: { type: 'string' },
+                    nemo: { type: 'string' },
+                    tipo: { type: 'string' },
+                    horario: { type: 'string' },
+                    caja: { type: 'string' },
+                },
+                required: ['nombre', 'ciudad', 'nemo', 'tipo', 'horario', 'caja']
+            },
+        },
+        handler: RegistrosAgencia
+    },
+    {
+        path: '/api/v1/Actualizar_Agencias',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    id_agencia: { type: 'string' },
+                    nombre: { type: 'string' },
+                    ciudad: { type: 'string' },
+                    nemo: { type: 'string' },
+                    tipo: { type: 'string' },
+                    horario: { type: 'string' },
+                    caja: { type: 'string' },
+                },
+                required: ['id_agencia', 'nombre', 'ciudad', 'nemo', 'tipo', 'horario', 'caja']
+            },
+        },
+        handler: ActualizarAgencia
+    },
+    {
+        path: '/api/v1/eliminar_Agencias',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    _id: { type: 'string' },
+                },
+                required: ['id']
+            },
+        },
+        handler: EliminarAgencia
+    },
+    {
+        path: '/api/v1/Agencias',
+        method: 'GET',
+        handler: ConsultarAgencias
+    },
+    {
+        path: '/api/v1/generarToken',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    email: { type: 'string' },
+                },
+                required: ['email']
+            },
+        },
+        handler: GenerarTokenVerificacion
     }
 ]
 

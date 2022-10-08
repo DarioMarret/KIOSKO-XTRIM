@@ -101,6 +101,46 @@ export const LinkPago = async (req, reply) => {
     }
 }
 
+export const LinkPagoCorreo = async (req, reply) => {
+    const { cuenta, cedula, contrato, email, tipo } = req.body
+    try {
+        const { data, status } = await axios.post('https://whatsapp.grupotvcable.com:9007/api/tvcable/LinkPagoCorreo', {
+            tipo: tipo,
+            cuenta: cuenta,
+            cedula: cedula,
+            contrato: contrato,
+            sistema: "CRMWeb",
+            canalNotificaciones: [
+                {
+                    tipo: "email",
+                    canalEnvio: "masterbase",
+                    valores: [email]
+                }
+            ],
+            fechavencimiento: moment().add(1, 'days').format('YYYY-MM-DD')
+        },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${process.env.TOKEN}`
+                },
+            })
+        if (status === 200) {
+            reply.code(200).send({
+                success: true,
+                data: data.Objeto
+            })
+        } else {
+            reply.code(401).send({
+                success: false,
+                msg: 'Error al consultar el estatus de la cuenta'
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const buscarCuentaSaldo = async (req, reply) => {
     const { cedula } = req.body
     try {

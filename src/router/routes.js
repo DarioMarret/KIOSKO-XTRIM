@@ -1,4 +1,4 @@
-import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago, planUpgrade, ProblemadeServicio } from '../controller/controller'
+import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago, LinkPagoCorreo, planUpgrade, ProblemadeServicio } from '../controller/controller'
 import { ActualizarAgencia, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia, VerificarToken } from '../controller/loginKiosko'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
@@ -48,6 +48,24 @@ const routes = [
             },
         },
         handler: LinkPago
+    },
+    {
+        path: '/api/v1/LinkPagoCorreo',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    tipo: { type: 'string' },
+                    cedula: { type: 'string' },
+                    cuenta: { type: 'string' },
+                    contrato: { type: 'string' },
+                    email: { type: 'string' },
+                },
+                required: ['cedula', 'cuenta', 'contrato', 'email', 'tipo']
+            },
+        },
+        handler: LinkPagoCorreo
     },
     {
         path: '/api/v1/buscarCuentaSaldo',

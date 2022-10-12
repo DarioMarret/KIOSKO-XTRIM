@@ -217,9 +217,9 @@ export const ProblemadeServicio = async (req, reply) => {
 export const BuroCliente = async (req, reply) => {
     const { cedula } = req.body
     try {
-        const { data, status } = await axios.post(`https://whatsapp.grupotvcable.com:12001/api/whatsappstore/BuroCliente`,{
+        const { data, status } = await axios.post(`https://whatsapp.grupotvcable.com:12001/api/whatsappstore/BuroCliente`, {
             cedula: cedula
-        } ,{
+        }, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${process.env.TOKEN_PLAN}`
@@ -230,7 +230,7 @@ export const BuroCliente = async (req, reply) => {
                 success: true,
                 dara: data
             })
-        }else{
+        } else {
             reply.code(200).send({
                 success: false,
                 dara: data
@@ -238,5 +238,65 @@ export const BuroCliente = async (req, reply) => {
         }
     } catch (error) {
         console.log(error)
+    }
+}
+export const ConsultaPlanActual = async (req, reply) => {
+    const { contrato } = req.body
+    try {
+        const { data, status } = await axios.get(`https://whatsapp.grupotvcable.com:1299/api/whatsappstore/ConsultaNuevoPlanIdPromo?contrato=${contrato}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${process.env.TOKEN_PLAN}`
+            },
+        })
+        if (status == 200) {
+            reply.code(200).send({
+                success: true,
+                dara: data
+            })
+        } else {
+            reply.code(200).send({
+                success: false,
+                dara: data
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const RegistroAutomatico = async (req, reply) => {
+    const { cedula, Contrato, Cuenta, Product_id, Rootcitem, PlanActual, PlanNuevo, IdPromo, Correo, MegasNuevo, PrecioNuevo, Tecnologia } = req.body
+    const { data, status } = await axios.post(`https://whatsapp.grupotvcable.com:1299/api/whatsappstore/CambiaPlanWhatsApp`, {
+        cedula,
+        Contrato,
+        Cuenta,
+        Product_id,
+        Rootcitem,
+        PlanActual,
+        PlanNuevo,
+        Origen: "KIOSKOVIRTUAL",
+        IdPromo,
+        ParametrosAdicionales: {
+            Correo,
+            MegasNuevo,
+            PrecioNuevo,
+            Tecnologia,
+        }
+    }, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${process.env.TOKEN_PLAN}`
+        },
+    })
+    if (status == 200) {
+        reply.code(200).send({
+            success: true,
+            dara: data
+        })
+    } else {
+        reply.code(200).send({
+            success: false,
+            dara: data
+        })
     }
 }

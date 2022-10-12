@@ -1,4 +1,4 @@
-import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, LinkPago, LinkPagoCorreo, planUpgrade, ProblemadeServicio } from '../controller/controller'
+import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, ConsultaPlanActual, LinkPago, LinkPagoCorreo, planUpgrade, ProblemadeServicio, RegistroAutomatico } from '../controller/controller'
 import { ActualizarAgencia, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia, VerificarToken } from '../controller/loginKiosko'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
@@ -207,7 +207,48 @@ const routes = [
             },
         },
         handler: VerificarToken
+    },
+    {
+        path: '/api/v1/ConsultaPlanActual',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    cedula: { type: 'string' },
+                },
+                required: ['cedula']
+            },
+        },
+        handler: ConsultaPlanActual
+
+    },
+    {
+        path: '/api/v1/RegistroAutomatico',
+        method: 'POST',
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    cedula: { type: 'string' },
+                    Contrato: { type: 'string' },
+                    Cuenta: { type: 'string' },
+                    Product_id: { type: 'string' },
+                    Rootcitem: { type: 'string' },
+                    PlanActual: { type: 'string' },
+                    PlanNuevo: { type: 'string' },
+                    IdPromo: { type: 'string' },
+                    Correo: { type: 'string' },
+                    MegasNuevo: { type: 'string' },
+                    PrecioNuevo: { type: 'string' },
+                    Tecnologia: { type: 'string' },
+                },
+                required: ['cedula', 'Contrato', 'Cuenta', 'Product_id', 'Rootcitem', 'PlanActual', 'PlanNuevo', 'IdPromo', 'Correo', 'MegasNuevo', 'PrecioNuevo', 'Tecnologia']
+            },
+        },
+        handler: RegistroAutomatico
     }
+    
 ]
 
 export default routes

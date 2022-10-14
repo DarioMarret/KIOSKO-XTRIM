@@ -6,6 +6,6 @@ import { Token } from '../model/token';
     cron.schedule('*/1 * * * *', async () => {
         console.log('running a task every minute');
         const token = await Token.find()
-        console.log("Token-->",token)
+        // console.log("Token-->",token)
     })
 })()

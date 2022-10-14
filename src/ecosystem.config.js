@@ -3,7 +3,7 @@ module.exports = {
     name: "XTRIM KIOSKOS",
     script: "./server.js",
     watch: true,
-    max_memory_restart: '1000M',
+    max_memory_restart: '100M',
     exec_mode: 'cluster',
     instances: 1,
     env: {

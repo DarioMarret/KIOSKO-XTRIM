@@ -249,7 +249,7 @@ const routes = [
         handler: RegistroAutomatico
     },
     {
-        path: '/api/v1/agencias_cercana:/ciudad',
+        path: '/api/v1/agencias_cercana/:ciudad',
         method: 'GET',
         schema: {
             params: {

@@ -1,5 +1,5 @@
 import { BuroCliente, buscarCuentas, buscarCuentaSaldo, buscarEstatusCuenta, ConsultaPlanActual, LinkPago, LinkPagoCorreo, planUpgrade, ProblemadeServicio, RegistroAutomatico } from '../controller/controller'
-import { ActualizarAgencia, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia, VerificarToken } from '../controller/loginKiosko'
+import { ActualizarAgencia, AgenciasCercanas, ConsultarAgencias, EliminarAgencia, GenerarTokenVerificacion, RegistrosAgencia, VerificarToken } from '../controller/loginKiosko'
 // import { ValidacionBasic } from '../function/ValidacionBasic'
 
 const routes = [
@@ -247,6 +247,21 @@ const routes = [
             },
         },
         handler: RegistroAutomatico
+    },
+    {
+        path: '/api/v1/agencias_cercana:/ciudad',
+        method: 'GET',
+        schema: {
+            params: {
+                type: 'object',
+                properties: {
+                    ciudad: { type: 'string' },
+                },
+                required: ['ciudad']
+            },
+        },
+        handler: AgenciasCercanas
+
     }
     
 ]

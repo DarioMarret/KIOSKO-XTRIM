@@ -133,3 +133,19 @@ export const ConsultarAgencia = async () => {
         }
     }
 }
+
+export const AgenciasCercanas = async (req, reply) => {
+    const { ciudad } = req.params
+    try {
+        const response = await Agencias.find({ ciudad })
+        reply.code(200).send({
+            success: true,
+            data: response
+        })
+    } catch (error) {
+        reply.code(200).send({
+            success: false,
+            msg: 'Error al consultar'
+        })
+    }
+}

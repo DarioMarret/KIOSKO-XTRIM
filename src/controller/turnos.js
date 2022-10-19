@@ -8,10 +8,16 @@ export const listarTurnos = async (req, reply) => {
     try {
         const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetHorarios/${id_agent}/${fecha_agent}`)
         if (status == 200) {
+            
+            moment().format('HH:mm:ss')
+            let horarios = data
+            var disponibles = horarios.filter(horario => {
+                return horario.horario > moment().format('HH:mm:ss')
+            })
 
             reply.code(200).send({
                 success: true,
-                dara: data
+                dara: disponibles
             })
 
         } else {

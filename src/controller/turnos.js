@@ -1,6 +1,7 @@
 import isEmpty from "just-is-empty"
 import moment from "moment/moment"
 import axios from "axios"
+moment.locale("es")
 
 export const listarTurnos = async (req, reply) => {
     const { id_agent, fecha } = req.body
@@ -9,7 +10,8 @@ export const listarTurnos = async (req, reply) => {
         const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetHorarios/${id_agent}/${fecha_agent}`)
         if (status == 200) {
             
-            moment().format('HH:mm:ss')
+            
+            console.log(moment().format('HH:mm:ss'))
             let horarios = data
             var disponibles = horarios.filter(horario => {
                 return horario.horario > moment().format('HH:mm:ss')

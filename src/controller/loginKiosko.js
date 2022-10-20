@@ -7,30 +7,38 @@ import moment from "moment";
 
 export const GenerarTokenVerificacion = async (req, reply) => {
     const { email } = req.body
-    const token = generateP()
-    const newToken = new Token({
-        email,
-        token,
-        fechaCreacion: moment().format('YYYY-MM-DD HH:mm:ss'),
-        estado: true,
-        agencia: ''
-    })
-    await newToken.save()
-    await EnviarTokenEmail(email, token)
-    reply.code(200).send({
-        success: true,
-        data: 'Token enviado exitosamente a su correo electronico expira en 5 minutos'
-    })
+    if(email.includes("@tvcable.com.ec") || email.includes("@intelnexo.com")){
+        const token = generateP()
+        const newToken = new Token({
+            email,
+            token,
+            fechaCreacion: moment().format('YYYY-MM-DD HH:mm:ss'),
+            estado: true,
+            agencia: ''
+        })
+        await newToken.save()
+        await EnviarTokenEmail(email, token)
+        reply.code(200).send({
+            success: true,
+            data: 'Token enviado exitosamente a su correo electronico expira en 5 minutos'
+        })
+    }else{
+        reply.code(200).send({
+            success: false,
+            data: 'No es un correo valido'
+        })
+    }
 }
 
 export const VerificarToken = async (req, reply) => {
     const { token } = req.body
     const tokenVerificado = await Token.findOne({ token })
-    if (tokenVerificado) {
+    if (tokenVerificado.estado) {
         reply.code(200).send({
             success: true,
             data: await ConsultarAgencia()
         })
+        await Token.findOneAndUpdate({ token }, { estado: false })
     } else {
         reply.code(200).send({
             success: false,

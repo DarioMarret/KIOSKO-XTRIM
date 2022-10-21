@@ -48,12 +48,14 @@ export const createTurno = async (req, reply) => {
 
     const { user_id, agencia_id, horario, cedula, nombres, referencias, correo, fecha_turno, tipo_turno } = req.body
     if (isEmpty(horario) && isEmpty(fecha_turno)) {
-        const fecha_agent = moment().add(1, 'days').format('YYYY-MM-DD')
+        // const fecha_agent = moment().add(1, 'days').format('YYYY-MM-DD')
+        const fecha_agent = moment().format('YYYY-MM-DD')
         const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetHorarios/${agencia_id}/${fecha_agent}`)
         if (status == 200) {
             let horarios = data
             var disponibles = horarios.filter(horario => {
-                return horario.horario > moment().add(-5, 'hours').format('HH:mm:ss')
+                // return horario.horario > moment().add(-5, 'hours').format('HH:mm:ss')
+                return horario.horario > moment().format('HH:mm:ss')
             })
             if (disponibles.length > 0) {
                 for (let index = 0; index < disponibles.length; index++) {

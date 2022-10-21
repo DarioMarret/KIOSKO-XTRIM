@@ -73,6 +73,7 @@ export const RegistrosAgencia = async (req, reply) => {
         }
     }
 }
+
 export const ActualizarAgencia = async (req, reply) => {
     const { id_agencia, nombre, ciudad, nemo, tipo, horario, caja } = req.body
     try {

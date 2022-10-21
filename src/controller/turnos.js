@@ -11,6 +11,7 @@ export const listarTurnos = async (req, reply) => {
         if (status == 200) {
             console.log(moment().format('HH:mm:ss'))
             let horarios = data
+            console.log(horarios)
             var disponibles = horarios.filter(horario => {
                 return horario.horario > moment().format('HH:mm:ss')
             })
@@ -51,32 +52,78 @@ export const createTurno = async (req, reply) => {
     //     fecha_turno,
     //     tipo_turno
     // })
-
-    const response = await fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            user_id,
-            agencia_id,
-            horario,
-            cedula,
-            nombres,
-            referencias,
-            correo,
-            fecha_turno,
-            tipo_turno
+    if (isEmpty(horario) && isEmpty(fecha_turno)) {
+        const fecha_agent = moment().add(1, 'days').format('YYYY-MM-DD')
+        const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetHorarios/${agencia_id}/${fecha_agent}`)
+        if (status == 200) {
+            let horarios = data
+            var disponibles = horarios.filter(horario => {
+                return horario.horario > moment().add(-5, 'hours').format('HH:mm:ss')
+            })
+            for (let index = 0; index < disponibles.length; index++) {
+                let element = disponibles[index]
+                if (element.disponibles > 0) {
+                    const response = await fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            user_id,
+                            agencia_id,
+                            horario: element.horario,
+                            cedula,
+                            nombres,
+                            referencias,
+                            correo,
+                            fecha_turno: fecha_agent,
+                            tipo_turno
+                        })
+                    })
+                    const data = await response.json()
+                    if (data) {
+                        reply.code(200).send({
+                            success: true,
+                            dara: {
+                                fecha: fecha_agent,
+                                horario: element.horario,
+                                ...data
+                            }
+                        })
+                    }
+                    return
+                }
+            }
+        }
+    } else {
+        const response = await fetch(`https://turnostvc.intelnexo.com/api/CreateTurnoCliente`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id,
+                agencia_id,
+                horario,
+                cedula,
+                nombres,
+                referencias,
+                correo,
+                fecha_turno,
+                tipo_turno
+            })
         })
-    })
-    const data = await response.json()
-    console.log(data)
-    if (data) {
-        reply.code(200).send({
-            success: true,
-            dara: data
-        })
+        const data = await response.json()
+        console.log(data)
+        if (data) {
+            reply.code(200).send({
+                success: true,
+                dara: data
+            })
+        }
     }
+
+
 }
 
 

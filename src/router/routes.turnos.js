@@ -30,11 +30,11 @@ const routes = [
                     cedula: { type: 'string' },
                     nombres: { type: 'string' },
                     referencias: { type: 'string' },
-                    correo: { type: 'string' },
-                    fecha_turno: { type: 'string' },
+                    correo: { type: 'string', format: 'email' },
+                    fecha_turno: { type: 'string', format: 'date' },
                     tipo_turno: { type: 'string' },
                 },
-                required: ['user_id', 'agencia_id', 'horario', 'cedula', 'nombres', 'referencias', 'correo', 'fecha_turno', 'tipo_turno']
+                required: ['user_id', 'agencia_id', 'cedula', 'nombres', 'referencias', 'correo', 'tipo_turno']
             },
         },
         handler: createTurno

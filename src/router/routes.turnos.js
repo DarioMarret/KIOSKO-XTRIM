@@ -31,7 +31,7 @@ const routes = [
                     nombres: { type: 'string' },
                     referencias: { type: 'string' },
                     correo: { type: 'string', format: 'email' },
-                    fecha_turno: { type: 'string', format: 'date' },
+                    fecha_turno: { type: 'string' },
                     tipo_turno: { type: 'string' },
                 },
                 required: ['user_id', 'agencia_id', 'cedula', 'nombres', 'referencias', 'correo', 'tipo_turno']

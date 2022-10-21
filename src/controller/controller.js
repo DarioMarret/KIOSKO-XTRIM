@@ -177,17 +177,20 @@ export const planUpgrade = async (req, reply) => {
                 'Authorization': `${process.env.TOKEN_PLAN}`
             },
         })
-        if (data.CodigoError == "0") {
-            reply.code(200).send({
-                success: true,
-                dara: data.Objeto
-            })
-        } else {
-            reply.code(200).send({
-                success: false,
-                msg: 'Error al consultar el estatus de la cuenta'
-            })
-        }
+        reply.code(200).send({
+            dara: data
+        })
+        // if (data.CodigoError == "0") {
+        //     reply.code(200).send({
+        //         success: true,
+        //         dara: data.Objeto
+        //     })
+        // } else {
+        //     reply.code(200).send({
+        //         success: false,
+        //         msg: 'Error al consultar el estatus de la cuenta'
+        //     })
+        // }
     } catch (error) {
         console.log(error)
     }

@@ -133,8 +133,6 @@ export const createTurno = async (req, reply) => {
 
 export const ConsultarTurno = async (req, reply) => {
     const { cedula } = req.params
-    // const { data, status } = await axios.get(`https://turnostvc.intelnexo.com/api/GetTurnoCliente/${cedula}`)
-
     const response = await fetch(`https://turnostvc.intelnexo.com/api/GetTurnoCliente/${cedula}`)
     const data = await response.json()
     if (data) {

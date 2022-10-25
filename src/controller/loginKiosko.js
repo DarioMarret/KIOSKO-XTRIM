@@ -7,7 +7,8 @@ import moment from "moment";
 
 export const GenerarTokenVerificacion = async (req, reply) => {
     const { email } = req.body
-    if(email.includes("@tvcable.com.ec") || email.includes("@intelnexo.com")){
+    if(email.includes("@tvcable.com.ec") || email.includes("@intelnexo.com") || email.includes("@gamail.com")){
+        console.log("email valido", email)
         const token = generateP()
         const newToken = new Token({
             email,

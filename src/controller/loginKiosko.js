@@ -18,11 +18,19 @@ export const GenerarTokenVerificacion = async (req, reply) => {
             agencia: ''
         })
         await newToken.save()
-        await EnviarTokenEmail(email, token)
+        const response = await EnviarTokenEmail(email, token)
+        if(response){
         reply.code(200).send({
             success: true,
             data: 'Token enviado exitosamente a su correo electronico expira en 5 minutos'
         })
+        }else{
+         reply.code(200).send({
+            success: false,
+            data: 'No se ahh podido enviar el token'
+        })
+         }   
+        
     }else{
         reply.code(200).send({
             success: false,

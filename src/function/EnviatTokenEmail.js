@@ -24,6 +24,7 @@ export const EnviarTokenEmail = async (email, token) => {
         }
     } catch (error) {
         console.log(error)
+        return false
     }
 
 

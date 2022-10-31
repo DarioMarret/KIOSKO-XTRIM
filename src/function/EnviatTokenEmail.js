@@ -5,7 +5,7 @@ import axios from "axios"
 export const EnviarTokenEmail = async (email, token) => {
 
     try {
-        const { data, status } = await axios.post('https://auto.xfiv.chat/webhook/Xtrim-emails', {
+        const { data, status } = await axios.post('http://automation.xfiv.chat/sender_email/email/notificaciones', {
             email,
             asunto: "Token de verificación Kiosko",
             content: `<h1>Bienvenido a Kiosko Xtrim</h1>
